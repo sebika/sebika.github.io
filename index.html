@@ -25,11 +25,35 @@
     height:100%;
     object-fit: cover;
     }
+
+    input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
     </style>
 
 
   </head>
   <body>
+    <form
+        action="https://formspree.io/f/mvojelao"
+        method="POST"
+        >
+        <label>
+            Your email:
+            <input type="email" name="email">
+        </label>
+        <label>
+            Your message:
+            <textarea name="message"></textarea>
+        </label>
+        <!-- your other form fields go here -->
+        <button type="submit">Send</button>
+    </form>
+
     <div>
         <img src="1.png" alt="data">
     </div>

@@ -12,18 +12,29 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-
+    <script>
+      function myFunction() {
+        user = document.getElementById("user").value
+        pass = document.getElementById("pass").value
+        if (user === "admin" && pass === "admin") {
+          document.location.href="sensor.html";
+        }
+        else {
+          alert("Invalid credentials")
+        }
+      }
+    </script>
     <div class="topnav">
       <a class="active" href="index.html">Home</a>
-      <a href="sensor.html">Sensor</a>
       <div class="login-container">
-        <form action="/action_page.php">
-          <input type="text" placeholder="Username" name="username">
-          <input type="text" placeholder="Password" name="psw">
-          <button type="submit">Login</button>
+        <form id="login">
+          <input type="text" placeholder="Username" name="username" id="user">
+          <input type="password" placeholder="Password" name="password" id="pass">
+          <button type="button" onclick="myFunction()">Login</button>
         </form>
       </div>
     </div>
+
 
     <div>
         <img src="imgs/1.png" alt="data">

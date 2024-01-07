@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dynamic Chart Update</title>
+    <!-- Include Apache ECharts library -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <label for="dateInput">Enter Date (DD):</label>
+        <input type="text" id="dateInput">
+        <label for="monthInput">Enter Month (MM):</label>
+        <input type="text" id="monthInput">
+        <button onclick="updateChart()">Update Chart</button>
+    </div>
+    <div id="myChart" style="width: 600px; height: 400px;"></div>
+
+    <script>
+        // Sample data (assuming customDataDaily is an array)
+        const customDataDaily = [
+            {
+                "start_date": "2023-11-30T00:00:00.0Z",
+                "end_date": "2023-11-30T00:05:00.0Z",
+                "count": 28
+            },
+            {
+                "start_date": "2023-11-30T00:10:00.0Z",
+                "end_date": "2023-11-30T00:15:00.0Z",
+                "count": 20
+            },
+            // Add more data as needed...
+        ];
+
+        let myChart;
+
+        // Function to update the chart based on user input
+        function updateChart() {
+            const dateInput = document.getElementById("dateInput").value;
+            const monthInput = document.getElementById("monthInput").value;
+            const userSelectedDate = `2023-${monthInput.padStart(2, '0')}-${dateInput.padStart(2, '0')}T`;
+
+            const filteredData = customDataDaily.filter(data => data.start_date.startsWith(userSelectedDate));
+
+            if (filteredData.length > 0) {
+                if (myChart) {
+                    myChart.dispose();
+                }
+
+                const chartDom = document.getElementById('myChart');
+                myChart = echarts.init(chartDom);
+
+                const xAxisData = filteredData.map(data => data.start_date);
+                const seriesData = filteredData.map(data => data.count);
+
+                const option = {
+                    xAxis: {
+                        type: 'category',
+                        data: xAxisData
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: seriesData,
+                        type: 'line'
+                    }]
+                };
+
+                myChart.setOption(option);
+            } else {
+                console.log("Data not found for the selected date and month.");
+            }
+        }
+    </script>
+</body>
+
+</html>

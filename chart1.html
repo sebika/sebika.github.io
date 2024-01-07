@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sensor 1 Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+</head>
+<body>
+  <div>
+    <label for="interval">Select Interval: </label>
+    <select id="interval">
+      <option value="daily">Daily</option>
+      <option value="weekly">Weekly</option>
+      <option value="monthly">Monthly</option>
+    </select>
+  </div>
+
+  <div id="chart" style="width: 1500px; height: 650px;"></div>
+
+  <script>
+    // Your dynamic chart data
+    const chartData = {
+      daily: {
+        xAxisData: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
+        seriesData: [120, 200, 150, 80, 70, 110, 130]
+      },
+      weekly: {
+        xAxisData: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        seriesData: [120, 200, 150, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130]
+      },
+      monthly: {
+        xAxisData: Array.from({ length: 31 }, (_, i) => `Day ${i + 1}`),
+        seriesData: [120, 200, 150, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130]
+      }
+    };
+
+    // Initialize ECharts instance
+    var chart = echarts.init(document.getElementById('chart'));
+
+    // Function to update chart based on selected interval
+    function updateChart(interval) {
+      var options = {
+        title: {
+          text: 'Sensor 1 Data'
+        },
+        xAxis: {
+          type: 'category',
+          data: chartData[interval].xAxisData
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          data: chartData[interval].seriesData,
+          type: 'line'
+        }]
+      };
+
+      // Set chart options
+      chart.setOption(options);
+    }
+
+    // Initial chart with daily interval
+    updateChart('daily');
+
+    // Event listener for dropdown change
+    document.getElementById('interval').addEventListener('change', function(event) {
+      updateChart(event.target.value);
+    });
+  </script>
+</body>
+</html>

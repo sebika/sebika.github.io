@@ -2,53 +2,245 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sensor 1 Chart</title>
+  <title>Sensor 2 Chart</title>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.2.2/dist/echarts.min.js"></script>
+  <link rel="stylesheet" href="yourstylesheet.css">
+  
+  <style>
+    /* CSS for responsive chart container */
+    #chart {
+      
+      width: 100%;
+      height: 645px;
+      max-width: 1550px; /* Adjust max-width as needed */
+      margin: 0 auto;
+    }
+    #page {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+        max-width: 2100px;
+        margin: 0 auto;
+    }
+    
+    #data {
+        flex-basis: calc(10% - 20px); /* Adjust the width of the left part */
+    }
+    
+    #right {
+        flex-basis: calc(90% - 20px); /* Adjust the width of the right part */
+        margin-top: 20px; /* Adjust margin as needed */
+    }
+    
+    /* Style for the back button */
+    #backButton {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 20px;
+        background-color: #08d;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    
+    body {
+   
+    background-color: #e9e9e9;
+
+    height: 90vh;
+    }
+    
+    .form {
+    background-color: #929daf;
+    border-radius: 20px;
+    box-sizing: border-box;
+    height: 500px;
+    padding: 20px;
+    width: 500px;
+    }
+    
+    .title {
+    color: #000;
+    font-family: sans-serif;
+    font-size: 36px;
+    font-weight: 600;
+    margin-top: 30px;
+    }
+    
+    .subtitle {
+    color: #000000;
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    }
+    
+    .input-container {
+    height: 50px;
+    position: relative;
+    width: 100%;
+    }
+    
+    .ic1 {
+    margin-top: 40px;
+    }
+    
+    .ic2 {
+    margin-top: 40px;
+    }
+    .ic3 {
+        margin-top: 40px;
+    }
+    
+    .input {
+    background-color: #a4b0c4;
+    border-radius: 12px;
+    border: 0;
+    box-sizing: border-box;
+    color: #000000;
+    font-size: 18px;
+    height: 100%;
+    outline: 0;
+    padding: 4px 20px 0;
+    width: 100%;
+    }
+    
+    .cut {
+    background-color: #15172b;
+    border-radius: 10px;
+    height: 20px;
+    left: 20px;
+    position: absolute;
+    top: -20px;
+    transform: translateY(0);
+    transition: transform 200ms;
+    width: 76px;
+    }
+    
+    .cut-short {
+    width: 50px;
+    }
+    
+    .input:focus ~ .cut,
+    .input:not(:placeholder-shown) ~ .cut {
+    transform: translateY(8px);
+    }
+    
+    .placeholder {
+    color: #65657b;
+    font-family: sans-serif;
+    left: 20px;
+    line-height: 14px;
+    pointer-events: none;
+    position: absolute;
+    transform-origin: 0 50%;
+    transition: transform 200ms, color 200ms;
+    top: 20px;
+    }
+    
+    .input:focus ~ .placeholder,
+    .input:not(:placeholder-shown) ~ .placeholder {
+    transform: translateY(-30px) translateX(10px) scale(0.75);
+    }
+    
+    .input:not(:placeholder-shown) ~ .placeholder {
+    color: #808097;
+    }
+    
+    .input:focus ~ .placeholder {
+    color: #dc2f55;
+    }
+    
+    .submit {
+    background-color: #08d;
+    border-radius: 12px;
+    border: 0;
+    box-sizing: border-box;
+    color: #eee;
+    cursor: pointer;
+    font-size: 18px;
+    height: 50px;
+    margin-top: 20px;
+    outline: 0;
+    text-align: center;
+    width: 100%;
+    }
+    
+    .submit:active, .backButton:active {
+    background-color: #06b;
+    }
+
+  </style>
 </head>
 <body>
-    <div>
-        <label for="interval">Select Interval: </label>
-        <select id="interval">
-        <option value="daily">Daily</option>
-        <option value="weekly">Weekly</option>
-        <option value="monthly">Monthly</option>
-        </select>
-    </div>
-    <div id="additionalFields" >
-        <label for="dateInput">Enter Date (DD):</label>
-        <input type="text" id="dateInput">
-        <label for="monthInput">Enter Month (MM):</label>
-        <input type="text" id="monthInput">
-        <label for="yearInput">Enter Year (YYYY):</label>
-        <input type="text" id="yearInput">
-        <button id = "button" >Update Chart</button>
-    </div>
+    
+    <div id="page">
+        <div id="data" class="form">
+            <div>
+                <label for="interval" class="title">Select Interval: </label>
+                <select id="interval" class="input">
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                </select>
+            </div>
+            <div id="additionalFields" class="input-container ic1">
+                <label for="dateInput" class="subtitle">Enter Date (DD):</label>
+                <input type="text" id="dateInput" class="input">
+                <label for="monthInput" class="subtitle">Enter Month (MM):</label>
+                <input type="text" id="monthInput" class="input">
+                <label for="yearInput" class="subtitle">Enter Year (YYYY):</label>
+                <input type="text" id="yearInput" class="input">
+                <button id="button" class="submit">Update Chart</button>
+            </div>
+            <div id="weekFields" class="input-container ic2" style="display: none;">
+                <label for="dateInput2" class="subtitle">Enter Date (DD):</label>
+                <input type="text" id="dateInput2" class="input">
+                <label for="monthInput2" class="subtitle">Enter Month (MM):</label>
+                <input type="text" id="monthInput2" class="input">
+                <label for="yearInput2" class="subtitle">Enter Year (YYYY):</label>
+                <input type="text" id="yearInput2" class="input">
+                <button id="button2" class="submit">Update Chart</button>
+            </div>
+            <div id="monthFields" class="input-container ic3" style="display: none;">
+                <label for="monthInput3" class="subtitle">Enter Month (MM):</label>
+                <input type="text" id="monthInput3" class="input">
+                <label for="yearInput3" class="subtitle">Enter Year (YYYY):</label>
+                <input type="text" id="yearInput3" class="input">
+                <button id="button3" class="submit">Update Chart</button>
+            </div>
+        </div>
+        
+        <div id="right">
+            <div id="chart"></div>
+        </div>
+        <button id="backButton">Back</button>
 
-  <div id="chart" style="width: 1500px; height: 645px;"></div>
+
+    </div>
 
   <script>
     // Your dynamic chart data
     const chartData = {
       daily: {
-        xAxisData: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
-        seriesData: [120, 200, 150, 80, 70, 110, 130]
+        xAxisData: [],
+        seriesData: []
       },
       weekly: {
-        xAxisData: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        seriesData: [120, 200, 150, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130]
+        xAxisData: [],
+        seriesData: []
       },
       monthly: {
-        xAxisData: Array.from({ length: 31 }, (_, i) => `Day ${i + 1}`),
-        seriesData: [120, 200, 150, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130]
+        xAxisData: [],
+        seriesData:  []
       }
     };
 
-    // Function to transform detections into chart data
-    //function transformDetectionsToChartData(detections) {
-    //  const xAxisData = detections.map(detection => detection.start_date);
-    //  const seriesData = detections.map(detection => detection.count);
-    //  return { xAxisData, seriesData };
-    //}
+
 
     // Initialize ECharts instance
     var chart = echarts.init(document.getElementById('chart'));
@@ -57,58 +249,7 @@
 
     // Function to update chart based on selected interval
     function updateChart(interval) {
-      if (interval === 'detections') {
-        // Replace chart data with detections data
-        const detections = [
-          {
-            "start_date": "2023-10-01T00:00:00.0Z",
-            "end_date": "2023-10-01T00:05:00.0Z",
-            "count": 78
-          },
-          {
-            "start_date": "2023-10-01T00:05:00.0Z",
-            "end_date": "2023-10-01T00:10:00.0Z",
-            "count": 76
-          },
-          {
-            "start_date": "2023-10-01T00:15:00.0Z",
-            "end_date": "2023-10-01T00:20:00.0Z",
-            "count": 85
-          },
-          {
-            "start_date": "2023-10-01T00:20:00.0Z",
-            "end_date": "2023-10-01T00:25:00.0Z",
-            "count": 58
-          },
-          {
-            "start_date": "2023-10-01T00:50:00.0Z",
-            "end_date": "2023-10-01T00:55:00.0Z",
-            "count": 39
-          }
-        ];
 
-        const { xAxisData, seriesData } = transformDetectionsToChartData(detections);
-
-        var options = {
-          title: {
-            text: 'Sensor 1 Data'
-          },
-          xAxis: {
-            type: 'category',
-            data: xAxisData
-          },
-          yAxis: {
-            type: 'value'
-          },
-          series: [{
-            data: seriesData,
-            type: 'line'
-          }]
-        };
-
-        // Set chart options
-        chart.setOption(options);
-      } else {
         // Update chart based on selected interval
         var options = {
           title: {
@@ -129,7 +270,7 @@
 
         // Set chart options
         chart.setOption(options);
-      }
+      
     }
 
     const customDataDaily = [
@@ -22165,18 +22306,115 @@
       }
     ];
 
+    
+    const startCHart = customDataDaily.filter(data => data.start_date.startsWith("2023-10-01"));
     // Extracting date part from start_date for xAxisData
-    const xAxisData = customDataDaily.map(data => data.start_date.split('T')[1].slice(0,-6));
+    const xAxisData = startCHart.map(data => data.start_date.split('T')[1].slice(0,-6));
 
     // Extracting counts for seriesData
-    const seriesData = customDataDaily.map(data => data.count);
+    const seriesData = startCHart.map(data => data.count);
 
     // Merge into the 'daily' interval in chartData
     chartData.daily.xAxisData = xAxisData;
     chartData.daily.seriesData = seriesData;
 
+    let initialWeekValue = transformDatesWithDayNames("2023-10-01", 6);
+    
+    for (let i = 0; i < initialWeekValue.length; i++) {
+        chartData.weekly.xAxisData.push(initialWeekValue[i].day);
+        chartData.weekly.seriesData.push(getAverageCountForDate(customDataDaily, initialWeekValue[i].date).AverageCount);
+    }
+
+    let filteredData = customDataDaily.filter(data => data.start_date.startsWith("2023-10"));
+    let defaultMonth = getDailyAverages(filteredData);
+      
+    for (let date in defaultMonth) {
+        chartData.monthly.xAxisData.push(defaultMonth[date].Date);
+        chartData.monthly.seriesData.push(defaultMonth[date].AverageCount);
+    }
+    
+
     // Initial chart with daily interval
     updateChart('daily');
+
+    function getAverageCountForDate(data, desiredDate) {
+        // Filter the data to get entries for the desired date
+        const entriesForDate = data.filter(entry => entry.start_date.startsWith(desiredDate));
+      
+        // Calculate the total count and the number of entries for the date
+        const totalCount = entriesForDate.reduce((total, entry) => total + entry.count, 0);
+        const numberOfEntries = entriesForDate.length;
+      
+        // Calculate the average count for the date
+        const averageCount = numberOfEntries > 0 ? totalCount / numberOfEntries : 0;
+        
+        // Return an object with Date and AverageCount
+        return {
+          Date: desiredDate,
+          AverageCount: averageCount.toFixed(0) // Rounding to 2 decimal places
+        };
+    }
+      
+    // Example usage:
+    const date = "2023-10-01";
+    const result = getAverageCountForDate(customDataDaily, date);
+    console.log(result);
+
+    function transformDatesWithDayNames(startDate, numberOfDays) {
+        let dateArray = [];
+        let dateObj = new Date(startDate);
+    
+        const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    
+        for (let i = 0; i <= numberOfDays; i++) {
+            let currentDate = dateObj.toISOString().split('T')[0];
+            let currentDay = daysOfWeek[dateObj.getDay()]; // Get day name from index
+    
+            dateArray.push({ date: currentDate, day: currentDay });
+            dateObj.setDate(dateObj.getDate() + 1);
+        }
+    
+        return dateArray;
+    }
+    
+    // Example usage:
+    let startDate = "2023-10-30";
+    let numberOfDays = 6;
+    let dateArray = transformDatesWithDayNames(startDate, numberOfDays);
+    console.log(dateArray); 
+
+    function getDailyAverages(data) {
+        const dailyCounts = {};
+      
+        data.forEach(entry => {
+          const date = entry.start_date.slice(0, 10); // Extracting yyyy-mm-dd from the start_date
+          if (!dailyCounts[date]) {
+            dailyCounts[date] = {
+              totalCount: 0,
+              numberOfEntries: 0
+            };
+          }
+      
+          dailyCounts[date].totalCount += entry.count;
+          dailyCounts[date].numberOfEntries++;
+        });
+      
+        const averages = [];
+        for (const date in dailyCounts) {
+          const { totalCount, numberOfEntries } = dailyCounts[date];
+          averages[date] = {
+            Date: date,
+            AverageCount: (totalCount / numberOfEntries).toFixed(0)
+          };
+        }
+      
+        return averages;
+    }
+      
+    // Example usage:
+
+    const dailyAveragesTest = getDailyAverages(customDataDaily);
+    console.log(dailyAveragesTest);
 
     function updateChartFiltered() {
         const dateInput = document.getElementById("dateInput").value;
@@ -22187,11 +22425,11 @@
         console.log(userSelectedDate);
         const filteredData = customDataDaily.filter(data => data.start_date.startsWith(userSelectedDate));
         console.log(filteredData);
+        let test = transformDatesWithDayNames(userSelectedDate, 6);
+        console.log(test); 
         
         if (filteredData.length > 0) {
-            if (chart) {
-                chart.dispose();
-            }
+          
 
             const xAxisDataFiltered = filteredData.map(data => data.start_date.split('T')[1].slice(0,-6));
             const seriesDataFiltered = filteredData.map(data => data.count);
@@ -22222,17 +22460,149 @@
         } else {
             console.log("Data not found for the selected date and month.");
         }
+        document.getElementById("dateInput").value= ""
+        document.getElementById("monthInput").value= ""
+        document.getElementById("yearInput").value= ""
     }
 
+
+    function updateChartWeek(){
+        const dateInput = document.getElementById("dateInput2").value;
+        const monthInput = document.getElementById("monthInput2").value;
+        const yearInput = document.getElementById("yearInput2").value;
+        const userSelectedDate = `${yearInput.padStart(4, '0')}-${monthInput.padStart(2, '0')}-${dateInput.padStart(2, '0')}`;
+        console.log(userSelectedDate);
+        
+        let test = transformDatesWithDayNames(userSelectedDate, 6);
+        console.log(test); 
+
+        if (userSelectedDate.length > 0) {
+           
+            
+            let daysArray = [];
+            for (let i = 0; i < test.length; i++) {
+                daysArray.push(test[i].day);
+            }
+
+            let average = [];
+            for (let i = 0; i < test.length; i++) {
+                average.push(getAverageCountForDate(customDataDaily, test[i].date).AverageCount);
+            }
+            console.log(average);
+            
+
+            var option = {
+                title: {
+                    text: 'Sensor EC Data'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: daysArray
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: average,
+                    type: 'line'
+                }]
+            };
+
+            chart.setOption(option);
+        } else {
+            console.log("Data not found for the selected date and month.");
+        }
+        document.getElementById("dateInput2").value= ""
+        document.getElementById("monthInput2").value= ""
+        document.getElementById("yearInput2").value= ""
+
+    }
+
+
+    function updateChartMonth(){
+        
+        const monthInput = document.getElementById("monthInput3").value;        
+        const yearInput = document.getElementById("yearInput3").value;
+        const userSelectedDate = `${yearInput.padStart(4, '0')}-${monthInput.padStart(2, '0')}`;
+
+        console.log(userSelectedDate);
+        const filteredData = customDataDaily.filter(data => data.start_date.startsWith(userSelectedDate));
+
+        if (userSelectedDate.length > 0) {
+            
+            let dailyAverages = getDailyAverages(filteredData);
+            console.log(dailyAverages);
+            
+            let daysArray = [];
+            let values = [];
+            for (let date in dailyAverages) {
+                daysArray.push(dailyAverages[date].Date);
+                values.push(dailyAverages[date].AverageCount);
+            }
+            console.log(daysArray);
+            console.log(values);
+
+            var option = {
+                title: {
+                    text: 'Sensor EC Data'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: daysArray
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: values,
+                    type: 'line'
+                }]
+            };
+
+            chart.setOption(option);
+        } else {
+            console.log("Data not found for the selected date and month.");
+            
+        }
+        
+        document.getElementById("monthInput3").value= ""
+        document.getElementById("yearInput3").value= ""
+
+    }
+
+    document.getElementById('button3').addEventListener('click', updateChartMonth);
+
+    document.getElementById('button2').addEventListener('click', updateChartWeek);
+
     document.getElementById('button').addEventListener('click', updateChartFiltered);
+
+    document.getElementById('backButton').addEventListener('click', function() {
+        window.location.href = 'sensor.html';
+    });
+
     // Event listener for dropdown change
     document.getElementById('interval').addEventListener('change', function(event) {
         var additionalFields = document.getElementById('additionalFields');
+        var weekFields = document.getElementById('weekFields');
+        var monthFields = document.getElementById('monthFields');
+        
 
         if (event.target.value === 'daily') {
             additionalFields.style.display = 'block';
         } else {
             additionalFields.style.display = 'none';
+        }
+
+        if (event.target.value === 'weekly') {
+            weekFields.style.display = 'block';
+        } else {
+            weekFields.style.display = 'none';
+        }
+
+        if (event.target.value === 'monthly') {
+            monthFields.style.display = 'block';
+        } else {
+            monthFields.style.display = 'none';
         }
         
         updateChart(event.target.value);

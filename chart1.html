@@ -248,26 +248,103 @@
     // Function to update chart based on selected interval
     function updateChart(interval) {
 
+      switch (interval) {
+        case 'daily':
+            console.log('Performing actions for daily interval');
+            // Your code for daily interval
+            var options = {
+              title: {
+                text: 'Sensor PRECIS Data'
+              },
+              xAxis: {
+                type: 'category',
+                data: chartData[interval].xAxisData,
+                name: "Hours"
+              },
+              yAxis: {
+                type: 'value',
+                name: 'People count'
+              },
+              series: [{
+                data: chartData[interval].seriesData,
+                type: 'line'
+              }]
+            };
+            break;
+        
+        case 'weekly':
+            console.log('Performing actions for weekly interval');
+            // Your code for weekly interval
+            var options = {
+              title: {
+                text: 'Sensor PRECIS Data'
+              },
+              xAxis: {
+                type: 'category',
+                data: chartData[interval].xAxisData,
+                name: "Days"
+              },
+              yAxis: {
+                type: 'value',
+                name: 'People count'
+              },
+              series: [{
+                data: chartData[interval].seriesData,
+                type: 'line'
+              }]
+            };
+            break;
+        
+        case 'monthly':
+            console.log('Performing actions for monthly interval');
+            // Your code for monthly interval
+            var options = {
+              title: {
+                text: 'Sensor PRECIS Data'
+              },
+              xAxis: {
+                type: 'category',
+                data: chartData[interval].xAxisData,
+                name: "Days"
+              },
+              yAxis: {
+                type: 'value',
+                name: 'People count'
+              },
+              series: [{
+                data: chartData[interval].seriesData,
+                type: 'line'
+              }]
+            };
+            break;
+        
+        default:
+            console.log('Interval not recognized');
+            break;
+      }
         // Update chart based on selected interval
+        /*
         var options = {
           title: {
-            text: 'Sensor PRECIS Data'
+            text: 'Sensor EC Data'
           },
-          xAxis: {
+            xAxis: {
             type: 'category',
-            data: chartData[interval].xAxisData
+            data: chartData[interval].xAxisData,
+            name: "Hours"
           },
           yAxis: {
-            type: 'value'
+            type: 'value',
+            name: 'People count'
           },
           series: [{
             data: chartData[interval].seriesData,
             type: 'line'
           }]
         };
-
+        */
         // Set chart options
-        chart.setOption(options);
+        chart.setOption(options); 
       
     }
 

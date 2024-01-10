@@ -1,6 +1,6 @@
 const sensorButtons = [
-    { label: 'Precis', imageUrl: 'imgs/precis.png', chartUrl: 'chart1.html' },
-    { label: 'EC', imageUrl: 'imgs/ec.png', chartUrl: 'chart2.html' },
+    { label: 'Precis', date: '01/10/2023 - 30/11/2023', imageUrl: 'imgs/precis.png', chartUrl: 'chart1.html' },
+    { label: 'EC', date: '01/10/2023 - 30/11/2023', imageUrl: 'imgs/ec.png', chartUrl: 'chart2.html' },
     // Add more sensor details as needed
     ];
 
@@ -19,6 +19,9 @@ const sensorButtons = [
         const label = document.createElement('span');
         label.textContent = sensor.label;
         button.appendChild(label);
+        const label2 = document.createElement('span');
+        label2.textContent = sensor.date;
+        button.appendChild(label2);
         sensorContainer.appendChild(button);
 
         button.addEventListener('click', () => {
